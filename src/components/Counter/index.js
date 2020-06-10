@@ -14,7 +14,7 @@ class Counter extends Component {
   }
   render () {
     console.log('render count component')
-    let { counter, onDecrement, onIncrementAsync, onIncrementAsyncOnce } = this.props
+    let { counter, onDecrement, onIncrementAsync, onIncrementAsyncOnce, onProxyWeather } = this.props
     return (
       <div>
         <button onClick={this.clickHandle}>
@@ -32,8 +32,9 @@ class Counter extends Component {
         <button onClick={onIncrementAsyncOnce}>
               IncrementAsyncOnce
         </button>
+        <button onClick={onProxyWeather}>调用天气接口测试代理功能</button>
         <hr />
-        <div>Clicked: {counter}times</div>
+        <div>Clicked: <span style={{fontSize: '20px', color: 'red'}}> {counter} </span>times</div>
       </div>
     )
   }

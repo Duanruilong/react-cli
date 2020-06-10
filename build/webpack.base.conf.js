@@ -8,7 +8,9 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    reacts: ['react', 'react-dom', 'redux', 'react-redux', 'react-router-dom'],
+    rutils: ['redux-saga', 'redux-form', 'axios', 'classnames/bind', 'pure-render-decorator'],
+    app: './src/entry.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -29,17 +31,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: (function(){
-          let _loader = [
-            'babel-loader'
-          ]
-          // 开发环境，解决 css-modules 中 hmr 不生效的问题 Good
-          // 'webpack-module-hot-accept'
-          if( !isProd && config.dev.cssModules ){
-            _loader.push( 'webpack-module-hot-accept' )
-          }
-          return _loader
-        })(),
+        loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
       },
       {
@@ -51,8 +43,12 @@ module.exports = {
         }
       },
       {
-        test: /\.json$/,
-        loader: 'json-loader'
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('media/[name].[hash:7].[ext]')
+        }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -61,6 +57,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   }

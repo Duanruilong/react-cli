@@ -11,12 +11,8 @@ import {CT_SHOW, CT_HIDE, CT_SHOW_REQUEST} from '@/const/countTimer'
 export function * incrementAsync () {
   yield delay(1000)
   yield put({ type: INCREMENT })
-  try {
-    let Promise = yield API.getSceneInfo(123)
-    console.log(Promise)
-  } catch (e) {
-    console.log(e)
-  }
+  let Promise = yield API.getSceneInfo(123)
+  console.log(Promise)
 }
 
 function * watchIncrementAsyncSaga () {
@@ -45,11 +41,21 @@ function * setCountTimerShowRequestSaga () {
   yield takeLatest(CT_SHOW_REQUEST, setCountTimerShowRequest)
 }
 
+function * getProxyWeather () {
+  let Promise = yield API.proxyWeather()
+  console.log(Promise)
+}
+
+function * getProxyWeatherSaga () {
+  yield takeLatest('GET_WEATHER_PROXY', getProxyWeather)
+}
+
 export default function * rootSaga () {
   yield all([
     helloSaga(),
     watchIncrementAsyncSaga(),
     watchIncrementAsyncOnceSaga(),
-    setCountTimerShowRequestSaga()
+    setCountTimerShowRequestSaga(),
+    getProxyWeatherSaga()
   ])
 }

@@ -1,4 +1,4 @@
-import {axios} from '@/utils'
+import { axios } from '@/utils'
 
 function getSceneInfo (id) {
   return axios({
@@ -7,8 +7,24 @@ function getSceneInfo (id) {
       sceneId: id
     }
   })
+    .then(res => {
+      return res
+    })
+    .catch(err => {
+      return err
+    })
 }
 
-export {
-  getSceneInfo
+function proxyWeather () {
+  return axios({
+    url: '/weather'
+  })
+    .then(res => {
+      return res
+    })
+    .catch(err => {
+      return err
+    })
 }
+
+export { getSceneInfo, proxyWeather }
